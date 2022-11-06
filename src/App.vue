@@ -1,22 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import ComLogin from './components/login/index.vue'
+import Home from './views/home.vue'
 </script>
 
 <template>
   <div class="conter">
     <RouterView />
-    <!-- <ComLogin /> -->
   </div>
-  <!-- <header>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header> -->
 </template>
 
 <style scoped>

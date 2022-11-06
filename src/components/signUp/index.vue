@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 17:09:40
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-06 22:12:24
+ * @LastEditTime: 2022-11-06 22:26:29
  * @FilePath: \vue3-game\src\components\login\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -31,7 +31,7 @@
     <div class="login_div">
       <input type="number" v-model="sinupInfo.phono" maxlength="11" placeholder="请输入手机号" />
     </div>
-    <div @click="handleLogin" class="login_button">注册</div>
+    <div @click="handleLogin" class="buttonHover login_button">注册</div>
   </div>
 </template>
 
@@ -65,9 +65,6 @@
     margin: 3rem auto 1rem auto;
     background: linear-gradient(to right,#8ebcf5 0,#00e2fa 80%,#00e2fa 100%);
     color: white;
-  }
-  .login_button:active{
-    background: black;
   }
 }
 </style>

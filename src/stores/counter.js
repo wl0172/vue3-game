@@ -2,11 +2,11 @@ import { ref, reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCounterStore = defineStore('counter', () => {
-  const count = ref(document.cookie)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+  const token = ref(document.cookie)
+  // const doubleCount = computed(() => token.value * 2)
+  // function increment() {
+  //   token.value
+  // }
 
-  return { count, doubleCount, increment }
+  return { token }
 })
