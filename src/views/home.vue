@@ -16,6 +16,7 @@ const $router = useRouter();
 const counterStore = useCounterStore()
 
 let jokesArr = []
+const yi = reactive({count: 0})
 
 // 查询笑话
 const handleGet = () => {
@@ -38,18 +39,20 @@ const handleExit = () => {
   })
 }
 
+// 监听手指滑动
 onMounted(() => {
+  return
   let layer = [...document.getElementsByClassName('home')][0]
   let startX, startY, moveEndX, moveEndY, X, Y;
   layer.addEventListener("touchstart", (event => {
     console.log('start' + event)
-    // event.preventDefault(); 
+    // event.preventDefault()
     startX = event.targetTouches[0].pageX;
     startY = event.targetTouches[0].pageY;
   }))
   layer.addEventListener("touchend", (event => {
     console.log(event)
-    // event.preventDefault();
+    // event.preventDefault()
     moveEndX = event.changedTouches[0].pageX;
     moveEndY = event.changedTouches[0].pageY;
     X = moveEndX - startX;
@@ -61,11 +64,18 @@ onMounted(() => {
 
 
 
-
+const handleYiyi = () => {
+  yi.count++
+  if (yi.count >= 3) $router.push({
+    path: '/Yiyi'
+  })
+}
 </script>
 
 <template>
   <div class="home">
+    <!-- 隐藏smallPlay -->
+    <div @click="handleYiyi" class="hide_yiyi"></div>
     <h1>This is an about page</h1>
 
     <button @click="handleGet">查询笑话</button>
@@ -74,10 +84,19 @@ onMounted(() => {
   </div>
 </template>
 
-<style>
+<style scoped lang="less">
 .home {
   width: 100%;
   height: 100%;
   color: white;
+
+  .hide_yiyi {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3rem;
+    height: 3rem;
+    z-index: 999;
+  }
 }
 </style>

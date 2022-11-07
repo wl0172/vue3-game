@@ -13,6 +13,8 @@ import Login from '../components/login/index.vue';
 import SignUp from '../components/signUp/index.vue';
 import Home from '../views/home.vue'
 
+import Yiyi from '../components/yiyi/index.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,6 +32,11 @@ const router = createRouter({
       path: '/SignUp',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: "/Yiyi",
+      name: 'Yiyi',
+      component: Yiyi
     },
     // 空白404页
     {
