@@ -107,6 +107,9 @@ const handleYiyi = () => {
     overflow: auto;
     max-height: 70%;
     background: #c3ab86;
+    li{
+      margin: 1em;
+    }
   }
 }
 </style>
