@@ -10,9 +10,16 @@
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../stores/counter'
+import { login } from '../api/index'
+
 const $router = useRouter();
 const counterStore = useCounterStore()
 
+const handleGet = () => {
+  login()
+}
+
+// 退出登录
 const handleExit = () => {
   document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   counterStore.token = ''
@@ -27,6 +34,9 @@ const handleExit = () => {
 <template>
   <div class="home">
     <h1>This is an about page</h1>
+
+    <button @click="handleGet">查询</button>
+
     <button @click="handleExit">退出登录</button>
   </div>
 </template>

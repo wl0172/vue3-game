@@ -43,9 +43,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 获取 token 
   const token = useCounterStore().token
-  console.log(token,to, '===')
   // 如果有token
-  // debugger
   if (token !== null && token !== '') {
     // 带有token访问登录页面跳转至主页
     if (to.path === '/Login') {
