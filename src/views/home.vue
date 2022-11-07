@@ -24,11 +24,9 @@ const yi = reactive({count: 0})
 const handleGet = () => {
   const data = login()
   data.then((res) => {
-    console.log(res,jokesArr.value, '------')
     if (res.result) {
       jokesArr.value = res ? res.result ? res.result.data : [] : []
     }
-    console.log(jokesArr.value, '---')
   })
 }
 
