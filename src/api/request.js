@@ -29,16 +29,17 @@ function createService() {
       // apiData 是 API 返回的数据
       const apiData = response.data
       // 这个 Code 是和后端约定的业务 Code
-      const code = apiData.code
+      const code = apiData.code || apiData.error_code
       // 如果没有 Code, 代表这不是项目后端开发的 API
       if (code === undefined) {
         // ElMessage.error("非本系统的接口")
-        return Promise.reject(new Error("非本系统的接口"))
+        // return Promise.reject(new Error("非本系统的接口"))
       } else {
         switch (code) {
           case 0:
             // code === 0 代表没有错误
-            return apiData
+            // return apiData
+            return Promise.resolve(apiData)
           default:
             // 不是正确的 Code
             // ElMessage.error(apiData.message || "Error")
@@ -97,16 +98,15 @@ function createService() {
 
 /** 创建请求方法 */
 function createRequestFunction(service) {
-  console.log(import.meta.env.VITE_BASE_API, '======')
   return function (config) {
     const configDefault = {
       headers: {
         // 携带 Token
         // Authorization: "Bearer " + getToken(),
-        "Content-Type": '	application/x-www-form-urlencoded',// get(config, "headers.Content-Type", "application/json", "application/x-www-form-urlencoded")
+        "Content-Type": get(config, "headers.Content-Type", "application/json", "application/x-www-form-urlencoded")
       },
       timeout: 5000,
-      baseURL: '/api',// 'http://apis.juhe.cn/',// import.meta.env.VITE_BASE_API,
+      baseURL: '/api', // import.meta.env.VITE_BASE_API,
       data: {}
     }
     return service(Object.assign(configDefault, config))

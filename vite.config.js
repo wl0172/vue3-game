@@ -33,11 +33,18 @@ export default defineConfig(({ mode }) => {
       port: 8080, //端口号
       open: false, //启动后是否自动打开浏览器
       proxy: {
+        // 笑话
         "/api": {
-          target: "http://apis.juhe.cn/",
+          target: "http://v.juhe.cn/",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
+        // 星座
+        // "/apis": {
+        //   target: "http://v.juhe.cn/",
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/api/, ""),
+        // },
       },
     },
   }
