@@ -7,7 +7,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { ref,reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../stores/counter'
 import { login } from '../api/index'
@@ -15,17 +15,20 @@ import { login } from '../api/index'
 const $router = useRouter();
 const counterStore = useCounterStore()
 
-let jokesArr = []
+let jokesArr = reactive({
+  value: []
+})
 const yi = reactive({count: 0})
 
 // 查询笑话
 const handleGet = () => {
   const data = login()
   data.then((res) => {
-    console.log(res, '------')
+    console.log(res,jokesArr.value, '------')
     if (res.result) {
-      jokesArr = res.result
+      jokesArr.value = res ? res.result ? res.result.data : [] : []
     }
+    console.log(jokesArr.value, '---')
   })
 }
 
@@ -81,6 +84,9 @@ const handleYiyi = () => {
     <button @click="handleGet">查询笑话</button>
 
     <button @click="handleExit">退出登录</button>
+    <ul>
+      <li v-for="i in jokesArr.value" :key="i">{{i.content}}</li>
+    </ul>
   </div>
 </template>
 
@@ -89,7 +95,6 @@ const handleYiyi = () => {
   width: 100%;
   height: 100%;
   color: white;
-
   .hide_yiyi {
     position: absolute;
     top: 0;
@@ -97,6 +102,11 @@ const handleYiyi = () => {
     width: 3rem;
     height: 3rem;
     z-index: 999;
+  }
+  ul{
+    overflow: auto;
+    max-height: 70%;
+    background: #c3ab86;
   }
 }
 </style>

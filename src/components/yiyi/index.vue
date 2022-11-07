@@ -7,54 +7,59 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, getCurrentInstance } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../../stores/counter.js'
 
-let x = 50
-let y = 60
-let xin = true
-let yin = true
-let step = 1
-let delay = 10
-const obj = reactive({
-  o: document.getElementById('yiyi_con')
-})
+// let x = 50
+// let y = 60
+// let xin = true
+// let yin = true
+// let step = 1
+// let delay = 10
+// const obj = reactive({
+//   o: document.getElementById('yiyi_con')
+// })
+const { ctx } = getCurrentInstance()
 
-const oDiv = () => {
-    var L = 0
-    let T = 0
-    var R = document.documentElement.clientWidth - document.getElementById('yiyi_con').offsetWidth
-    var B = document.documentElement.clientHeight - document.getElementById('yiyi_con').offsetHeight
-    document.getElementById('yiyi_con').style.left = x + document.body.scrollLeft + document.documentElement.scrollLeft + "px"
-    document.getElementById('yiyi_con').style.top = y + document.body.scrollTop + document.documentElement.scrollTop + "px"
-    x = x + step * (xin ? 1 : -1)
-    if (x < L) {
-      xin = true;
-      x = L
-    }
-    if (x > R) {
-      xin = false;
-      x = R
-    }
-    y = y + step * (yin ? 1 : -1)
-    if (y < T) {
-      yin = true;
-      y = T
-    }
-    if (y > B) {
-      yin = false;
-      y = B
-    }
-  }
+console.log(ctx, '---')
+
+// const oDiv = () => {
+//     var L = 0
+//     let T = 0
+//     var R = document.documentElement.clientWidth - document.getElementById('yiyi_con').offsetWidth
+//     var B = document.documentElement.clientHeight - document.getElementById('yiyi_con').offsetHeight
+//     document.getElementById('yiyi_con').style.left = x + document.body.scrollLeft + document.documentElement.scrollLeft + "px"
+//     document.getElementById('yiyi_con').style.top = y + document.body.scrollTop + document.documentElement.scrollTop + "px"
+//     x = x + step * (xin ? 1 : -1)
+//     if (x < L) {
+//       xin = true;
+//       x = L
+//     }
+//     if (x > R) {
+//       xin = false;
+//       x = R
+//     }
+//     y = y + step * (yin ? 1 : -1)
+//     if (y < T) {
+//       yin = true;
+//       y = T
+//     }
+//     if (y > B) {
+//       yin = false;
+//       y = B
+//     }
+//   }
 onMounted(() => {
-  var itl = setInterval(oDiv, delay)
-  document.getElementById('yiyi_con').onmouseover = function () {
-    clearInterval(itl)
-  }
-  document.getElementById('yiyi_con').onmouseout = function () {
-    itl = setInterval(oDiv, delay)
-  }
+//   var itl = setInterval(oDiv, delay)
+//   document.getElementById('yiyi_con').onmouseover = function () {
+//     clearInterval(itl)
+//   }
+//   document.getElementById('yiyi_con').onmouseout = function () {
+//     itl = setInterval(oDiv, delay)
+//   }
+
+  // console.log(obj, '---')
 })
 </script>
 

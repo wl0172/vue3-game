@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
     // 带有token访问登录页面跳转至主页
     if (to.path === '/Login') {
       next({
-        path: '/',
+        path: '/'
       })
     } else {
       // 带有token访问其他页面允许跳转
