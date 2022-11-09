@@ -19,7 +19,7 @@ import { RouterView } from 'vue-router'
 
 @media (max-width: 700px) {
   .conter {
-    background: url('./assets/img/bg.png') no-repeat;
+    background: url('./assets/img/bg.jpeg') no-repeat;
     background-size: 100% 100%;
     /* background-size: cover; */
     background-attachment: fixed;

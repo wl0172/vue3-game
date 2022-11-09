@@ -2,20 +2,30 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 17:09:40
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-06 22:26:29
+ * @LastEditTime: 2022-11-09 21:25:58
  * @FilePath: \vue3-game\src\components\login\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
   import { reactive } from 'vue';
+  import { useRouter } from 'vue-router';
+  const $router = useRouter();
+
   const sinupInfo = reactive({
     zhanghao: '',
     mima: '',
-    phono: ''
+    phono: '',
+    email: '',
   })
-  const handleLogin = () => {
-    // alert('敬请期待')
-    // console.log(sinupInfo, '===')
+  const handleBank = () => {
+    $router.push({
+      path: '/Login',
+      replace:true
+  })
+  }
+  const handleSigUp = () => {
+    alert('敬请期待')
+    console.log(sinupInfo, '===')
   }
 </script>
 
@@ -31,7 +41,14 @@
     <div class="login_div">
       <input type="number" v-model="sinupInfo.phono" maxlength="11" placeholder="请输入手机号" />
     </div>
-    <div @click="handleLogin" class="buttonHover login_button">注册</div>
+    <div class="login_div">
+      <input v-model="sinupInfo.email"  placeholder="请输入邮箱" oninput = "value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
+    </div>
+    <div class="login_a">
+      <div></div>
+      <div @click="handleBank">返回</div>
+    </div>
+    <div @click="handleSigUp" class="buttonHover login_button">注册</div>
   </div>
 </template>
 
@@ -57,6 +74,12 @@
       outline: none;
       padding: 0 1rem;
     }
+  }
+  .login_a {
+    display: flex;
+    font-size: .9rem;
+    justify-content: space-around;
+    color: #7676cb;
   }
   .login_button{
     width: 70%;

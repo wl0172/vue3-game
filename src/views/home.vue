@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 23:46:06
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-07 00:42:52
+ * @LastEditTime: 2022-11-09 19:55:31
  * @FilePath: \vue3-game\src\views\home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,8 +25,6 @@ onMounted(() => {
 
 <template>
   <div class="home">
-    <!-- 隐藏smallPlay -->
-    <div @click="handleLogout" class="hide_yiyi"></div>
     <ComHeader />
     <Comconter />
     <ComFooter />
@@ -38,14 +36,5 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   color: white;
-  .hide_yiyi {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 3rem;
-    height: 3rem;
-    z-index: 999;
-    background: yellow
-  }
 }
 </style>
