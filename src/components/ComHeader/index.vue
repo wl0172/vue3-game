@@ -2,12 +2,14 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-09 19:48:35
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-10 00:25:10
+ * @LastEditTime: 2022-11-10 00:41:16
  * @FilePath: \vue3-game\src\components\ComHeader\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
 import { useCounterStore } from '@/stores/counter'
+import { handleLogout } from '@/componentsEvent/index'
+
 const counterStore = useCounterStore()
 
 console.log(counterStore, 'header玩家信息======')
@@ -28,7 +30,7 @@ console.log(counterStore, 'header玩家信息======')
         <div>体力</div>
       </div>
     </div>
-    <div class="ComHeader_userInfo_icon">
+    <div class="ComHeader_userInfo_icon" @click="handleLogout">
       <img src="@/assets/img/left_arrow.png" alt="">
     </div>
   </div>
