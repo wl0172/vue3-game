@@ -7,6 +7,7 @@ export const useCounterStore = defineStore('counter', () => {
   // function increment() {
   //   token.value
   // }
+  const aa = ref(0)
 
-  return { token }
+  return { token, aa }
 })
