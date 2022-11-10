@@ -1,8 +1,10 @@
 <script setup>
-import { reactive, watch, onMounted } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
 const counterStore = useCounterStore()
+
+let timer = ref()
 
 const listArr = reactive({
   arr: []
@@ -26,29 +28,28 @@ watch(counterStore.state, (newVal, oldVal) => {
 //   a.scrollTop = a.scrollHeight
 // }, 4000);
 
-let handleBattle = () => {
-  console.log(counterStore.state,'')
-
+const handleBattle = () => {
   if(counterStore.state.escapeState){
+    let end = setInterval(function () { }, 10);
+    for (let i = 1; i <= end; i++) {
+      clearInterval(i);
+    }
     return
   }
-
   let num = 0
-  let timer = null
   let max = document.querySelector('.ComMonster_state_xue_n').clientWidth
   let xieNode = document.querySelector('.ComMonster_state_xue_n');
 
-  localStorage.setItem('x', max)
+  // localStorage.setItem('x', max)
   //从localStorage中取出上次血量
-  if (localStorage.x) { 
-    max = localStorage.x;
+  // if (localStorage.x) {
+    // max = localStorage.x;
     xieNode.style.width = max + 'px';
-  };
+  // };
 
   let r = Math.random() * 5 + 5
   max -= r
-
-  localStorage.setItem('x', max); //将血量存到localStorage中
+  // localStorage.setItem('x', max); //将血量存到localStorage中
   xieNode.style.width = max + 'px';
 
   clearInterval(timer); //实现画面震动效果

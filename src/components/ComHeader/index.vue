@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-09 19:48:35
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-10 00:41:16
+ * @LastEditTime: 2022-11-10 21:35:41
  * @FilePath: \vue3-game\src\components\ComHeader\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,6 +10,9 @@
 import { reactive } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import ComSetting from '@/components/ComSetting/index.vue';
+import ComAudio from '@/components/ComAudio/index.vue'
+import '@/utils/audio'
+
 
 const counterStore = useCounterStore()
 
@@ -17,12 +20,17 @@ const settingsInfo = reactive({
   popupShow: false
 })
 
+const handlePortrait = () => {
+  alert('编辑个人信息')
+}
+
 console.log(counterStore, 'xxx-header玩家信息======')
 </script>
 
 <template>
   <div class="ComHeader">
-    <div class="ComHeader_userInfo_img">
+    <ComAudio v-show="false" />
+    <div class="ComHeader_userInfo_img" @click="handlePortrait">
       <img src="@/assets/img/bg.jpeg" alt="">
     </div>
     <div class="ComHeader_userInfo_list">
