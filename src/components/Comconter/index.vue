@@ -1,39 +1,27 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { reactive, watch } from 'vue';
 import { useCounterStore } from '@/stores/counter'
-import { login } from '@/api/index'
+// import { login } from '@/api/index'
+import ComMonster from '@/components/ComMonster/index.vue'
 
 const counterStore = useCounterStore()
 
-// 数据
-let dataArr = reactive({
-  value: []
-})
-const yi = reactive({ count: 0 })
+watch(counterStore.state,(newVal,oldVal)=>{})
 
-// 查询笑话
-const handleGet = () => {
-  const data = login()
-  data.then((res) => {
-    if (res.result) {
-      jokesArr.value = res ? res.result ? res.result.data : [] : []
-    }
-  })
-}
-const handleVuex = () => {
-  counterStore.aa = counterStore.aa + 1
-}
+
 
 </script>
 
 <template>
   <div class="Comconter">
-    
-    <div class="Comconter_div">
-      <h1>This is an about page</h1>
+    <!-- 公告 -->
+    <div class="Comconter_tip">
+      <van-notice-bar scrollable text="优惠大酬宾！！！！！" />
     </div>
-
-
+    <!-- 怪物面板 -->
+    <div class="Comconter_div">
+      <ComMonster v-if="counterStore.state.combarState" />
+    </div>
 
   </div>
 </template>
@@ -44,12 +32,17 @@ const handleVuex = () => {
   height: calc(100% - 7.7rem);
   overflow: auto;
   position: relative;
-  padding: 2rem;
+  .Comconter_tip{
+    height: 1.5rem;
+    .van-notice-bar{
+      height: 100%;
+    }
+  }
   .Comconter_div {
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 0, 0, 0.422);
-    margin: 0 auto;
+    height: calc(100% - 3.5rem);
+    background: rgba(189, 68, 68, 0.422);
+    margin: 1rem;
+    border-radius: .3rem
   }
 }
 </style>

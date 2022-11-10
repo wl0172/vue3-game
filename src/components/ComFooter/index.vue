@@ -7,41 +7,48 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
-import { ref, reactive } from 'vue'
-let buttonState = reactive({
-  value: false
-})
+import { useCounterStore } from '@/stores/counter'
+const counterStore = useCounterStore()
+
+// 搜索
 const handleDoun = () => {
-  buttonState.value = !buttonState.value
+  if(!counterStore.state.searchState){
+    counterStore.state.searchState = !counterStore.state.searchState
+    setTimeout(() => {
+      counterStore.state.searchState = false
+      counterStore.state.combarState = true
+      counterStore.state.escapeState = false
+    }, (3400))
+  }
 }
 
 // 战斗
 const handleCombat = () => {
-  alert('战斗')
+  if(!counterStore.state.startBattle){
+    counterStore.state.startBattle = true
+  }
 }
 
 // 逃跑
 const hadnleEscape = () => {
-  alert('逃跑')
+  counterStore.state.searchState = false
+  counterStore.state.combarState = false
+  counterStore.state.startBattle = false
+  counterStore.state.escapeState = true
 }
 
 </script>
 
 <template>
   <div class="ComFooter">
-    <!-- <div class="cont">
-      <button class="btn">
-        <span>Submit</span>
-        <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" height="62" width="62">
-      </button>
-    </div> -->
 
     <!-- 探索 -->
-    <div class="ComFooter_search" @click="handleDoun">
+    <div class="ComFooter_search" @click="handleDoun" v-if="!counterStore.state.combarState">
       <img src="@/assets/img/footer_search.png" alt="">
+      <div :class="[counterStore.state.searchState?'ComFooter_searchAction':'']"></div>
     </div>
     <!-- 战斗-逃跑 -->
-    <div class="ComFooter_Combat">
+    <div class="ComFooter_Combat" v-if="counterStore.state.combarState">
       <div class="ComFooter_Combat_li" @click="handleCombat">战斗</div>
       <div class="ComFooter_Combat_li" @click="hadnleEscape">逃跑</div>
     </div>
@@ -50,6 +57,7 @@ const hadnleEscape = () => {
 </template>
 
 <style scoped lang="less" >
+@import url('@/assets/css3/index.less');
 .ComFooter {
   width: 100%;
   height: 3.7rem;
@@ -66,16 +74,29 @@ const hadnleEscape = () => {
     border-radius: 50%;
     background: linear-gradient(-90deg, rgba(188, 45, 45, 0.482), rgba(207, 197, 85, 0.409));
     margin: 0 auto;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // display: none;
     img {
       width: 70%;
       height: 70%;
+      animation: shake 2.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both infinite;
     }
   }
-  // 战斗-逃跑
+  .ComFooter_searchAction{
+    font-size: 1.7rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    position: absolute;
+    color: white;
+    overflow: hidden;
+    border-radius: 50%;
+    transform: translateZ(0);
+    /* animation：规定完成动画所花费的时间，该属性必须规定，否则动画时长为0，无法播放 */
+    animation: load 1.7s infinite ease, round 1.7s infinite ease;
+  }
+  // 战斗+逃跑
   .ComFooter_Combat{
     width: 100%;
     height: 100%;
@@ -83,7 +104,7 @@ const hadnleEscape = () => {
     align-items: center;
     justify-content: space-around;
     .ComFooter_Combat_li{
-      width: 10rem;
+      width: 37%;
       height: 3rem;
       text-align: center;
       line-height: 3.7rem;
@@ -101,125 +122,4 @@ const hadnleEscape = () => {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@keyframes extend {
-  0% {
-    width: 600px;
-    height: 200px;
-    border-radius: 100px;
-  }
-
-  10% {
-    width: 610px;
-    height: 210px;
-    background: #fff;
-    margin-left: - 5px;
-    margin-top: - 5px;
-  }
-
-  20% {
-    width: 600px;
-    height: 200px;
-    background: #6fb07f;
-    margin-left: 0px;
-    margin-top: 0px;
-  }
-
-  100% {
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
-    margin-left: 190px;
-    background: #6fb07f;
-  }
-}
-
-
-@keyframes disappear {
-  0% {
-    opacity: 1;
-  }
-
-  20% {
-    color: #fff;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes appear {
-  0% {
-    opacity: 1;
-  }
-
-  70% {
-    opacity: 0.5;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes hidetip {
-
-from {
-
-  opacity: 1;
-
-}
-
-to {
-
-  opacity: 0;
-
-}
-
-}
-
-// button:focus>img {
-//   /*animation*/
-//   -webkit-animation: appear 1s ease-in-out;
-//   -ms-animation: appear 1s ease-in-out;
-//   animation: appear 1s ease-in-out;
-//   -webkit-animation-fill-mode: forwards;
-//   /* Chrome, Safari, Opera */
-//   animation-fill-mode: forwards
-// }
 </style>

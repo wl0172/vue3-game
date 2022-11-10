@@ -7,12 +7,17 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
+import { reactive } from 'vue'
 import { useCounterStore } from '@/stores/counter'
-import { handleLogout } from '@/componentsEvent/index'
+import ComSetting from '@/components/ComSetting/index.vue';
 
 const counterStore = useCounterStore()
 
-console.log(counterStore, 'header玩家信息======')
+const settingsInfo = reactive({
+  popupShow: false
+})
+
+console.log(counterStore, 'xxx-header玩家信息======')
 </script>
 
 <template>
@@ -30,9 +35,20 @@ console.log(counterStore, 'header玩家信息======')
         <div>体力</div>
       </div>
     </div>
-    <div class="ComHeader_userInfo_icon" @click="handleLogout">
+    <!-- 设置等 -->
+    <div class="ComHeader_userInfo_icon" @click="settingsInfo.popupShow = !settingsInfo.popupShow">
       <img src="@/assets/img/left_arrow.png" alt="">
     </div>
+    <van-popup
+      @click-overlay="settingsInfo.popupShow = !settingsInfo.popupShow"
+      :show="settingsInfo.popupShow" 
+      position="right" 
+      :style="{ width: '70%', height: '100vh' }"
+    >
+      <ComSetting />
+    </van-popup>
+
+
   </div>
 </template>
 

@@ -13,6 +13,7 @@ import Login from '../components/login/index.vue';
 import SignUp from '../components/signUp/index.vue';
 import Home from '../views/home.vue'
 
+// Yiyi专用
 import Yiyi from '../components/yiyi/index.vue'
 
 const router = createRouter({

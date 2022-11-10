@@ -7,7 +7,12 @@ export const useCounterStore = defineStore('counter', () => {
   // function increment() {
   //   token.value
   // }
-  const aa = ref(0)
+  const state = reactive({
+    searchState: false, // 找怪状态
+    combarState: false, // 是否显示-战斗+逃跑
+    startBattle: false, // 点击战斗 - 开始
+    escapeState: false, // 逃跑
+  })
 
-  return { token, aa }
+  return { token, state }
 })

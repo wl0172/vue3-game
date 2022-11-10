@@ -17,9 +17,8 @@ import ComFooter from '../components/ComFooter/index.vue'
 
 // 监听手指滑动
 onMounted(() => {
-  Finger()
+  Finger(false)
 })
-
 
 </script>
 

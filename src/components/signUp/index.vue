@@ -33,7 +33,7 @@
   <div class="login_conter">
     <p class="login_p">熊出没</p>
     <div class="login_div">
-      <input v-model="sinupInfo.zhanghao" maxlength="16" placeholder="请输入账号" oninput = "value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
+      <input v-model="sinupInfo.zhanghao" maxlength="30" placeholder="请输入账号" oninput = "value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
     </div>
     <div class="login_div">
       <input v-model="sinupInfo.mima" maxlength="16" placeholder="请输入密码" oninput = "value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
@@ -76,9 +76,10 @@
     }
   }
   .login_a {
+    width: 87%;
     display: flex;
     font-size: .9rem;
-    justify-content: space-around;
+    justify-content: end;
     color: #7676cb;
   }
   .login_button{
