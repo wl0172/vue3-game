@@ -1,12 +1,12 @@
 <script setup>
-import { ref, reactive, watch, onMounted } from 'vue'
+import { ref, ref, watch, onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
 const counterStore = useCounterStore()
 
 let timer = ref()
 
-const listArr = reactive({
+const listArr = ref({
   arr: []
 })
 
