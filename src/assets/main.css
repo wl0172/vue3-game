@@ -1,4 +1,5 @@
 @import './base.css';
+/* @import url(https://fonts.googleapis.com/earlyaccess/notosanskannada.css); */
 
 html,body{
   width: 100%;
@@ -8,7 +9,7 @@ html,body{
   font-weight: normal;
   width: 100%;
   height: 100%;
-  font-family: cursive;
+  font-family: ui-monospace;
 }
 img{
   width: 100%;

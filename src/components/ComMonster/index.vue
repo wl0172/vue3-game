@@ -1,5 +1,5 @@
 <script setup>
-import { ref, ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 
 const counterStore = useCounterStore()

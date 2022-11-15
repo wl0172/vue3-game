@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 17:29:03
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-09 20:14:25
+ * @LastEditTime: 2022-11-16 00:03:47
  * @FilePath: \vue3-game\src\api\request.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,6 +12,7 @@ import axios from "axios"
 // import { ElMessage } from "element-plus"
 import { get } from "lodash"
 // import { getToken } from "./cache/cookies"
+import { Toast } from 'vant'
 
 /** 创建请求实例 */
 function createService() {
@@ -26,6 +27,7 @@ function createService() {
   // 响应拦截（可根据具体业务作出相应的调整）
   service.interceptors.response.use(
     (response) => {
+      return Promise.resolve(response)
       // apiData 是 API 返回的数据
       const apiData = response.data
       // 这个 Code 是和后端约定的业务 Code
@@ -58,6 +60,9 @@ function createService() {
           // Token 过期时，直接退出登录并强制刷新页面（会重定向到登录页）
           // useUserStoreHook().logout()
           location.reload()
+          break
+        case 422:
+          Toast(error.response.data.message)
           break
         case 403:
           error.message = "拒绝访问"

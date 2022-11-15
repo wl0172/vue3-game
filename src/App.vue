@@ -1,9 +1,18 @@
+<!--
+ * @Author: ljw 15262283592@163.com
+ * @Date: 2022-11-11 20:37:01
+ * @LastEditors: ljw 15262283592@163.com
+ * @LastEditTime: 2022-11-15 21:13:41
+ * @FilePath: \vue3-game\src\App.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <script setup>
 import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <div class="conter">
+    <ComAudio />
     <RouterView />
   </div>
 </template>

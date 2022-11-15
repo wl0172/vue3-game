@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 17:09:40
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-09 21:14:03
+ * @LastEditTime: 2022-11-15 23:01:56
  * @FilePath: \vue3-game\src\components\login\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,12 +10,14 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../../stores/counter.js'
+import { login } from '@/api/index'
 
 const counterStore = useCounterStore()
 const $router = useRouter();
 const sinupInfo = ref({
-  zhanghao: '',
-  mima: '',
+  name: '',
+  password: '',
+  device: '12321321321312321'
 })
 // 忘记密码
 const handleForgotPassword = () => {
@@ -28,14 +30,16 @@ const handleSignUp = () => {
   })
 }
 // 登录
-const handleLogin = () => {
-  if (sinupInfo.zhanghao && sinupInfo.mima) {
+const handleLogin = async () => {
+  if (sinupInfo.value.name && sinupInfo.value.password) {
+    const data = await login(sinupInfo.value)
+    console.log(data, '======')
     // alert('登录中。。。')
-    document.cookie = 'token=123'
-    counterStore.token = 'token=123'
-    $router.push({
-    path: '/'
-  })
+    // document.cookie = 'token=123'
+    // counterStore.token = 'token=123'
+    // $router.push({
+    //   path: '/'
+    // })
   } else {
     alert('请输入完整登录信息!')
   }
@@ -46,11 +50,11 @@ const handleLogin = () => {
   <div class="login_conter">
     <p class="login_p">熊出没</p>
     <div class="login_div">
-      <input v-model="sinupInfo.zhanghao" maxlength="30" placeholder="请输入账号"
+      <input v-model="sinupInfo.name" maxlength="30" placeholder="请输入账号"
         oninput="value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
     </div>
     <div class="login_div">
-      <input v-model="sinupInfo.mima" maxlength="16" placeholder="请输入密码"
+      <input v-model="sinupInfo.password" maxlength="16" placeholder="请输入密码"
         oninput="value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
     </div>
     <div class="login_a">
@@ -90,9 +94,12 @@ const handleLogin = () => {
 
   .login_a {
     display: flex;
-    font-size: .9rem;
-    justify-content: space-around;
+    font-size: 0.9rem;
+    justify-content: space-between;
     color: #7676cb;
+    width: 87%;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 
   .login_button {
