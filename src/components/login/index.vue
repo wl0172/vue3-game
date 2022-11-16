@@ -2,14 +2,14 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 17:09:40
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-15 23:01:56
+ * @LastEditTime: 2022-11-16 20:31:28
  * @FilePath: \vue3-game\src\components\login\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCounterStore } from '../../stores/counter.js'
+import { useCounterStore } from '@/stores/counter.js'
 import { login } from '@/api/index'
 import { deviceApp } from '@/utils/device'
 
@@ -33,14 +33,16 @@ const handleSignUp = () => {
 // 登录
 const handleLogin = async () => {
   if (sinupInfo.value.name && sinupInfo.value.password) {
-    const data = await login(sinupInfo.value)
-    console.log(data, '======')
-    // alert('登录中。。。')
-    // document.cookie = 'token=123'
-    // counterStore.token = 'token=123'
-    // $router.push({
-    //   path: '/'
-    // })
+    const { data } = await login(sinupInfo.value)
+    if(data?.token){
+      document.cookie = `token=${data.token}`
+      counterStore.token = 'token=123'
+      $router.push({
+        path: '/',
+        replace: true
+      })
+    }
+
   } else {
     alert('请输入完整登录信息!')
   }

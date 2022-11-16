@@ -2,16 +2,16 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-09 19:48:35
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-15 21:03:53
+ * @LastEditTime: 2022-11-17 00:23:51
  * @FilePath: \vue3-game\src\components\ComHeader\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
-import { ref } from 'vue'
-import { useCounterStore } from '@/stores/counter'
+import { ref, watch, computed } from 'vue'
 import ComSetting from '@/components/ComSetting/index.vue';
+import { useCounterStore } from '@/stores/counter'
 
-const counterStore = useCounterStore()
+const useStore = useCounterStore()
 
 const settingsInfo = ref({
   popupShow: false
@@ -21,7 +21,8 @@ const handlePortrait = () => {
   alert('编辑个人信息')
 }
 
-console.log(counterStore, 'xxx-header玩家信息======')
+
+
 </script>
 
 <template>
@@ -48,8 +49,7 @@ console.log(counterStore, 'xxx-header玩家信息======')
       @click-overlay="settingsInfo.popupShow = !settingsInfo.popupShow"
       :show="settingsInfo.popupShow" 
       position="right" 
-      :style="{ width: '70%', height: '100vh' }"
-    >
+      :style="{ height: '100vh',width: '70%' }">
       <ComSetting />
     </van-popup>
 

@@ -2,17 +2,17 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 17:29:03
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-16 00:03:47
+ * @LastEditTime: 2022-11-16 22:49:30
  * @FilePath: \vue3-game\src\api\request.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
 import axios from "axios"
-// import { useUserStoreHook } from "@/store/modules/user"
-// import { ElMessage } from "element-plus"
 import { get } from "lodash"
-// import { getToken } from "./cache/cookies"
 import { Toast } from 'vant'
+import { clearCookie } from '@/utils/index'
+// import { getToken } from "./cache/cookies"
+
 
 /** 创建请求实例 */
 function createService() {
@@ -59,6 +59,7 @@ function createService() {
         case 401:
           // Token 过期时，直接退出登录并强制刷新页面（会重定向到登录页）
           // useUserStoreHook().logout()
+          clearCookie()
           location.reload()
           break
         case 422:
@@ -107,8 +108,8 @@ function createRequestFunction(service) {
     const configDefault = {
       headers: {
         // 携带 Token
-        // Authorization: "Bearer " + getToken(),
-        "Content-Type": get(config, "headers.Content-Type", "application/json", "application/x-www-form-urlencoded")
+        Authorization: "Bearer " + document.cookie.split('=')[1],
+        "Content-Type": 'application/json'//get(config, "headers.Content-Type", "application/json", "application/x-www-form-urlencoded")
       },
       timeout: 5000,
       baseURL: '/api', // import.meta.env.VITE_BASE_API,

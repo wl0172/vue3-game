@@ -2,18 +2,25 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-09 19:48:35
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-10 00:34:55
+ * @LastEditTime: 2022-11-16 23:06:22
  * @FilePath: \vue3-game\src\components\ComFooter\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
 import { useCounterStore } from '@/stores/counter'
+import { startAdventure } from '@/api/index'
+
 const counterStore = useCounterStore()
 
 // 搜索
-const handleDoun = () => {
+const handleDoun = async () => {
   if(!counterStore.state.searchState){
     counterStore.state.searchState = !counterStore.state.searchState
+
+    const data = await startAdventure()
+    console.log(data, '======')
+
+
     setTimeout(() => {
       counterStore.state.searchState = false
       counterStore.state.combarState = true

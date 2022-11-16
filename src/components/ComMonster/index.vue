@@ -17,7 +17,7 @@ watch(counterStore.state, (newVal, oldVal) => {
       let j = 0;
       setTimeout(function () {
         handleBattle()
-        listArr.arr.push(arr[j++])
+        listArr.value.arr.push(arr[j++])
       }, i * 3000)
     }
   }
