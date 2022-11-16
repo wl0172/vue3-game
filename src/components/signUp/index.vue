@@ -11,8 +11,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { signUp } from '@/api/index'
 import { deviceApp } from '@/utils/device'
-
-const reg = /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/
+import { regEmail } from '@/utils/index'
 
 const $router = useRouter();
 
@@ -43,7 +42,7 @@ const handleSigUp = async () => {
     alert('请输入正确的手机号')
     return
   }
-  if(!reg.test(sinupInfo.value.email)){
+  if(!regEmail().test(sinupInfo.value.email)){
     alert('请输入正确的邮箱')
     return
   }

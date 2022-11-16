@@ -37,3 +37,8 @@ export const throttling = (fn, wait, immediate) => {
 	}
  
 }
+
+// 邮箱
+export const regEmail = () => {
+	return /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/
+}

@@ -11,13 +11,14 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../../stores/counter.js'
 import { login } from '@/api/index'
+import { deviceApp } from '@/utils/device'
 
 const counterStore = useCounterStore()
 const $router = useRouter();
 const sinupInfo = ref({
   name: '',
   password: '',
-  device: '12321321321312321'
+  device: JSON.stringify(deviceApp())
 })
 // 忘记密码
 const handleForgotPassword = () => {
@@ -54,11 +55,13 @@ const handleLogin = async () => {
         oninput="value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
     </div>
     <div class="login_div">
-      <input v-model="sinupInfo.password" maxlength="16" placeholder="请输入密码"
+      <input v-model="sinupInfo.password" maxlength="8" placeholder="请输入密码"
         oninput="value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
     </div>
     <div class="login_a">
-      <div @click="handleForgotPassword">忘记密码?</div>
+      <div @click="handleForgotPassword">
+        <!-- 忘记密码? -->
+      </div>
       <div @click="handleSignUp">注册</div>
     </div>
     <div @click="handleLogin" class="buttonHover login_button">登录</div>
