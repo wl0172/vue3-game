@@ -1,74 +1,63 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
+import { adventurFight } from '@/api/index'
+import { hpSetting } from '@/utils/hp'
 
 const counterStore = useCounterStore()
 
-let timer = ref()
-
+const monsterInfo = ref(counterStore.monster)
 const listArr = ref({
   arr: []
 })
+const hpNum = ref(hpSetting(counterStore.monster))
 
-watch(counterStore.state, (newVal, oldVal) => {
+// const hpSetting = computed(({hp,hp_max}) => {
+//   if (hp == hp_max) {
+//     return 100
+//   } else if(hp > 0) {
+//     return Number(((hp/hp_max)*100).toFixed(2))
+//   } else {
+//     return 0
+//   }
+// })
+
+watch(counterStore.state, async (newVal) => {
   if (newVal.startBattle) {
-    let arr = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
-    for (let i = 0; i < arr.length; i++) {
-      let j = 0;
-      setTimeout(function () {
-        handleBattle()
-        listArr.value.arr.push(arr[j++])
-      }, i * 3000)
+    const { data } = await adventurFight()
+
+    if(monsterInfo.value.hp){
+
+      if(data.adventure.monster.hp > 0){
+        const text = `第${data.adventure.turn}回合，你使用普通攻击，对${monsterInfo.value.name}造成了 ${data.targetSelf} 点伤害`
+        listArr.value.arr.push(text)
+        counterStore.monster = data.adventure.monster
+        monsterInfo.value = data.adventure.monster
+        counterStore.info = data.player
+        hpNum.value = hpSetting(data.adventure.monster)
+        counterStore.state.startBattle = false
+      }else{
+        // counterStore.state.searchState = false
+        // counterStore.state.combarState = false
+        // counterStore.state.startBattle = false
+        // counterStore.state.escapeState = true
+      }
     }
+
+    // let arr = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+    // for (let i = 0; i < arr.length; i++) {
+    //   let j = 0;
+    //   setTimeout(function () {
+    //     handleBattle()
+    //     listArr.value.arr.push(arr[j++])
+    //   }, i * 3000)
+    // }
   }
+},{deep:true})
+
+
+onMounted(() => {
 })
-
-// setTimeout(() => {
-//   let a = [...document.getElementsByClassName('ComMonster_list')][0]
-//   a.scrollTop = a.scrollHeight
-// }, 4000);
-
-const handleBattle = () => {
-  if(counterStore.state.escapeState){
-    let end = setInterval(function () { }, 10);
-    for (let i = 1; i <= end; i++) {
-      clearInterval(i);
-    }
-    return
-  }
-  let num = 0
-  let max = document.querySelector('.ComMonster_state_xue_n').clientWidth
-  let xieNode = document.querySelector('.ComMonster_state_xue_n');
-
-  // localStorage.setItem('x', max)
-  //从localStorage中取出上次血量
-  // if (localStorage.x) {
-    // max = localStorage.x;
-    xieNode.style.width = max + 'px';
-  // };
-
-  let r = Math.random() * 5 + 5
-  max -= r
-  // localStorage.setItem('x', max); //将血量存到localStorage中
-  xieNode.style.width = max + 'px';
-
-  clearInterval(timer); //实现画面震动效果
-  timer = setInterval(function() {
-    num++; //num控制画面震动时间，点击一下后，每隔30ms震动一次，震动10次
-    if (num == 10) {
-      clearInterval(timer);
-      num = 0;
-      document.body.style.left = 0;
-      document.body.style.top = 0;
-      return;
-    };
-    document.body.style.left = Math.random() * -20 + 10 + 'px';
-    document.body.style.top = Math.random() * -20 + 10 + 'px';
-  }, 30)
-}
-
-
-onMounted(() => {})
 
 </script>
 
@@ -79,18 +68,25 @@ onMounted(() => {})
       <div class="ComMonster_portrait_img">
         <img src="@/assets/img/bg.jpeg" alt="">
       </div>
-      <div class="ComMonster_portraitTxt">简介多久是多久啊手机打开撒娇的叫撒大家撒到家啊啥的就撒娇的洒进房间啊手机关机啊感觉啊就</div>
+      <div class="ComMonster_portraitTxt">{{monsterInfo.name}}</div>
     </div>
     <!-- 状态+预计伤害 -->
     <div class="ComMonster_state">
       <div class="ComMonster_state_xue">
-        <div class="ComMonster_state_xue_n">100</div>
+        <!-- <div class="ComMonster_state_xue_n">{{monsterInfo.hp}}</div> -->
+        <van-progress 
+          class="ComMonster_state_xue_n" 
+          pivot-color="#00000000" 
+          color="linear-gradient(to right, #B0171F, #af464c)"
+          :percentage="hpNum > 0 ? hpNum : 0"
+          :pivot-text="monsterInfo.hp" />
       </div>
-      <div>预计伤害：10 ～ 14</div>
+      <div>预计伤害：{{monsterInfo.drops[0].min}} ～ {{monsterInfo.drops[0].max}}</div>
     </div>
     <!-- 对战信息 -->
+
     <div class="ComMonster_list" v-if="listArr.arr">
-      <div v-for="i in listArr.arr" :key="i">第一回合，你使用普通攻击，对敌人造成了 1000 点伤害</div>
+      <div v-for="i in listArr.arr" :key="i">{{i}}</div>
     </div>
   </div>
 </template>
@@ -135,9 +131,10 @@ onMounted(() => {})
       position: relative;
       .ComMonster_state_xue_n{
         width: 100%;
-        background: #B0171F;
+        height: 100%;
         position: absolute;
         left: 0;
+        background: #00000000;
       }
       // animation: shake 5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both infinite;
     }
@@ -147,6 +144,9 @@ onMounted(() => {})
     margin: 1rem auto;
     overflow: auto;
     max-height: calc( 100vh - 25rem );
+    div{
+      margin: .7rem 0;
+    }
   }
 }
 </style>

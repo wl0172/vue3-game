@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-09 19:48:35
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-17 00:23:51
+ * @LastEditTime: 2022-11-17 20:52:04
  * @FilePath: \vue3-game\src\components\ComHeader\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,10 +10,12 @@
 import { ref, watch, computed, onMounted, toRefs } from 'vue'
 import ComSetting from '@/components/ComSetting/index.vue';
 import { useCounterStore } from '@/stores/counter'
+import { storeToRefs } from 'pinia'
 
 const useStore = useCounterStore()
 useStore.useGetInfo()
-const { info } = useCounterStore().userStateInfo
+
+const info = ref(null)
 
 const settingsInfo = ref({
   popupShow: false
@@ -23,6 +25,9 @@ const handlePortrait = () => {
   alert('编辑个人信息')
 }
 
+watch(useStore.userStateInfo,(n)=>{
+  info.value = n.info
+})
 
 </script>
 
@@ -34,15 +39,15 @@ const handlePortrait = () => {
     </div>
     <div class="ComHeader_userInfo_list">
       <div class="ComHeader_userInfo_list_li">
-        <div>{{info?.name}}</div>
-        <div>{{info.hp_max}}</div>
+        <div>昵称：{{info?.name}}</div>
+        <div>生命：{{info?.hp}}</div>
       </div>
       <div class="ComHeader_userInfo_list_li">
-        <div>精神力</div>
-        <div>体力</div>
+        <div>enemy：{{info?.enemy}}</div>
+        <div>体力：{{info?.thew}}</div>
       </div>
     </div>
-    <!-- 设置等 -->
+    <!-- 设置 -->
     <div class="ComHeader_userInfo_icon" @click="settingsInfo.popupShow = !settingsInfo.popupShow">
       <img src="@/assets/img/left_arrow.png" alt="">
     </div>

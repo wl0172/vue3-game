@@ -2,13 +2,14 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-09 19:48:35
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-16 23:06:22
+ * @LastEditTime: 2022-11-17 21:40:54
  * @FilePath: \vue3-game\src\components\ComFooter\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
 import { useCounterStore } from '@/stores/counter'
-import { startAdventure } from '@/api/index'
+import { startAdventure,adventurRunaway } from '@/api/index'
+import { Toast } from 'vant';
 
 const counterStore = useCounterStore()
 
@@ -16,16 +17,15 @@ const counterStore = useCounterStore()
 const handleDoun = async () => {
   if(!counterStore.state.searchState){
     counterStore.state.searchState = !counterStore.state.searchState
-
-    const data = await startAdventure()
-    console.log(data, '======')
-
-
-    setTimeout(() => {
-      counterStore.state.searchState = false
-      counterStore.state.combarState = true
-      counterStore.state.escapeState = false
-    }, (3400))
+    const { data } = await startAdventure()
+    if(data){
+      counterStore.monster = data?.monster || {}
+      setTimeout(() => {
+        counterStore.state.searchState = false
+        counterStore.state.combarState = true
+        counterStore.state.escapeState = false
+      }, 2700);
+    }
   }
 }
 
@@ -37,11 +37,17 @@ const handleCombat = () => {
 }
 
 // 逃跑
-const hadnleEscape = () => {
-  counterStore.state.searchState = false
-  counterStore.state.combarState = false
-  counterStore.state.startBattle = false
-  counterStore.state.escapeState = true
+const hadnleEscape = async () => {
+  // 1 标识逃跑成功；0 标识逃跑失败
+  const { data } = await adventurRunaway()
+  if(data.result){
+    counterStore.state.searchState = false
+    counterStore.state.combarState = false
+    counterStore.state.startBattle = false
+    counterStore.state.escapeState = true
+  }else{
+    Toast('逃跑失败，你还有机会！')
+  }
 }
 
 </script>

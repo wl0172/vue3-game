@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-10 20:03:00
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-10 21:33:10
+ * @LastEditTime: 2022-11-17 20:56:58
  * @FilePath: \vue3-game\src\components\Comconter\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,7 +24,7 @@ watch(counterStore.state, (newVal, oldVal) => { })
   <div class="Comconter">
     <!-- 公告 -->
     <div class="Comconter_tip">
-      <van-notice-bar scrollable text="优惠大酬宾！！！！！" />
+      <van-notice-bar mode="closeable" scrollable text="优惠大酬宾！！！！！" />
     </div>
     <!-- 怪物面板 -->
     <div class="Comconter_div">
