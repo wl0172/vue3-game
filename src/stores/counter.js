@@ -1,30 +1,17 @@
-import { ref, watch, computed } from 'vue'
+import { ref, reactive, watch, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { userInfo } from '@/api/index'
+import { login, userInfo } from '@/api/index'
+import { useApiState } from '@/api/requestState'
+
 
 export const useCounterStore = defineStore('counter', () => {
-  // state: () => ({
-  //   user: {aa:1}
-  // })
 
-  // const setUserInfo = (info) => {
-  //   console.log(state.value,'pania------')
-  //   // return userInfo = info
-  // }
-  // const getUserInfo = () => {
-  //   try {
-  //     return new Promise(async (resolve) => {
-  //       const { data } = await userInfo();
-  //       setUserInfo(data)
-  //     }) 
-  //   } catch (error) {
-  //     // 让表单组件显示错误
-  //     return error
-  //   }
-  // }
-
-
-  const token = ref(document.cookie)
+  const userStateInfo = ref({
+    info: {}
+  })
+  const token = ref({
+    token: document.cookie
+  })
 
   const state = ref({
     searchState: false, // 找怪状态
@@ -33,6 +20,28 @@ export const useCounterStore = defineStore('counter', () => {
     escapeState: false, // 逃跑
   })
 
+  const useLogin = async (val) => {
+    const { datas } = await useApiState(login, val)
+    const useToken = datas.value?.data?.token ? datas.value?.data.token : null
+    if(useToken){
+      document.cookie = `token=${useToken}`
+      token.value.token = `token=${useToken}`
+      location.reload()
+    }
+  }
 
-  return { token, state }
+  const useGetInfo = async () => {
+    const { datas } = await useApiState(userInfo)
+    if (datas.value) {
+      userStateInfo.value.info = datas.value.data.player
+    }
+  }
+
+  return {
+    userStateInfo,
+    token,
+    state,
+    useLogin,
+    useGetInfo,
+  }
 })

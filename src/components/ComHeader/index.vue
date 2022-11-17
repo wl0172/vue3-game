@@ -7,11 +7,13 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted, toRefs } from 'vue'
 import ComSetting from '@/components/ComSetting/index.vue';
 import { useCounterStore } from '@/stores/counter'
 
 const useStore = useCounterStore()
+useStore.useGetInfo()
+const { info } = useCounterStore().userStateInfo
 
 const settingsInfo = ref({
   popupShow: false
@@ -20,7 +22,6 @@ const settingsInfo = ref({
 const handlePortrait = () => {
   alert('编辑个人信息')
 }
-
 
 
 </script>
@@ -33,8 +34,8 @@ const handlePortrait = () => {
     </div>
     <div class="ComHeader_userInfo_list">
       <div class="ComHeader_userInfo_list_li">
-        <div>昵称</div>
-        <div>健康</div>
+        <div>{{info?.name}}</div>
+        <div>{{info.hp_max}}</div>
       </div>
       <div class="ComHeader_userInfo_list_li">
         <div>精神力</div>

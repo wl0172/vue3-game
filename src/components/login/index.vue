@@ -33,16 +33,7 @@ const handleSignUp = () => {
 // 登录
 const handleLogin = async () => {
   if (sinupInfo.value.name && sinupInfo.value.password) {
-    const { data } = await login(sinupInfo.value)
-    if(data?.token){
-      document.cookie = `token=${data.token}`
-      counterStore.token = 'token=123'
-      $router.push({
-        path: '/',
-        replace: true
-      })
-    }
-
+    counterStore.useLogin(sinupInfo.value)
   } else {
     alert('请输入完整登录信息!')
   }

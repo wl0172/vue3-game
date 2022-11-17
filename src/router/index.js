@@ -56,7 +56,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // 获取 token 
-  const token = useCounterStore().token
+  const { token } = useCounterStore().token
   // 如果有token
   if (token !== null && token !== '') {
     // 带有token访问登录页面跳转至主页
