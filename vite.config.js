@@ -2,7 +2,7 @@
  * @Author: ljw 15262283592@163.com
  * @Date: 2022-11-06 15:36:57
  * @LastEditors: ljw 15262283592@163.com
- * @LastEditTime: 2022-11-15 22:11:57
+ * @LastEditTime: 2022-11-17 23:04:22
  * @FilePath: \vue3-game\vite.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -34,7 +34,6 @@ export default defineConfig(({ mode }) => {
       open: false, //启动后是否自动打开浏览器
       hrm: true,
       proxy: {
-        // 笑话
         "/api": {
           target: "http://117.78.26.78",
           changeOrigin: true, // 开启代理，在本地创建一个虚拟服务端
@@ -45,12 +44,6 @@ export default defineConfig(({ mode }) => {
             "^/api": ""
           }
         },
-        // 星座
-        // "/apis": {
-        //   target: "http://v.juhe.cn/",
-        //   changeOrigin: true,
-        //   rewrite: (path) => path.replace(/^\/api/, ""),
-        // },
       },
     },
   }
